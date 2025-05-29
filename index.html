@@ -1,63 +1,617 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Landing Page</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernBrand</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: #4ecdc4;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #4ecdc4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 6rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Store Page */
+        .store-header {
+            text-align: center;
+            padding: 2rem 0 4rem;
+            color: white;
+        }
+
+        .store-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4ecdc4;
+            margin: 0.5rem 0;
+        }
+
+        .product-info p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FAQ Page */
+        .faq-header {
+            text-align: center;
+            padding: 2rem 0 4rem;
+            color: white;
+        }
+
+        .faq-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 200px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
     <nav>
-      <a href="#" class="logo">MySite</a>
-      <ul class="nav-links">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#store">Store</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
+        <div class="container">
+            <a href="#" class="logo">ModernBrand</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="nav-link active">Home</a></li>
+                <li><a href="#" onclick="showPage('store')" class="nav-link">Store</a></li>
+                <li><a href="#" onclick="showPage('faq')" class="nav-link">FAQ</a></li>
+            </ul>
+        </div>
     </nav>
-  </header>
 
-  <section class="hero">
-    <h1>Welcome to MySite</h1>
-    <p>Your one-stop landing page for awesome stuff.</p>
-    <a href="#store" class="btn">Visit Store</a>
-  </section>
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container">
+            <section class="hero">
+                <h1>Welkom bij de Toekomst</h1>
+                <p>Ontdek onze innovatieve producten en ervaar het verschil</p>
+                <a href="#" onclick="showPage('store')" class="cta-button">Ontdek Onze Producten</a>
+            </section>
 
-  <section id="store" class="store-container">
-    <h2>Our Store</h2>
-    <div class="product-grid">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/250x150" alt="Product 1" />
-        <h3>Product 1</h3>
-        <p>This is an awesome product you will love.</p>
-        <div class="price">$19.99</div>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/250x150" alt="Product 2" />
-        <h3>Product 2</h3>
-        <p>This product is even cooler than the first one.</p>
-        <div class="price">$29.99</div>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/250x150" alt="Product 3" />
-        <h3>Product 3</h3>
-        <p>Grab this limited edition product while it lasts.</p>
-        <div class="price">$39.99</div>
-        <button>Add to Cart</button>
-      </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Innovatief Design</h3>
+                    <p>Cutting-edge technologie gecombineerd met elegant design voor de beste gebruikerservaring.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Supersnel</h3>
+                    <p>Optimale prestaties en snelheid die je verwachtingen overtreffen, elke keer weer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Precisie</h3>
+                    <p>Nauwkeurig ontwikkeld met aandacht voor elk detail om perfecte resultaten te leveren.</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <section id="about" class="about-container">
-    <h2>About Us</h2>
-    <p>We are passionate about delivering quality products and awesome experiences.</p>
-  </section>
+    <!-- Store Page -->
+    <div id="store" class="page">
+        <div class="container">
+            <div class="store-header">
+                <h1>Onze Producten</h1>
+                <p>Ontdek onze selectie van premium producten</p>
+            </div>
 
-  <footer>
-    &copy; 2025 MySite. All rights reserved.
-  </footer>
+            <div class="products">
+                <div class="product-card">
+                    <div class="product-image">📱</div>
+                    <div class="product-info">
+                        <h3>Smart Device Pro</h3>
+                        <div class="product-price">€299</div>
+                        <p>Het nieuwste in slimme technologie met geavanceerde functies en elegant design.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">💻</div>
+                    <div class="product-info">
+                        <h3>Laptop Ultra</h3>
+                        <div class="product-price">€899</div>
+                        <p>Krachtige laptop voor professionals met ultrabook design en lange batterijduur.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">🎧</div>
+                    <div class="product-info">
+                        <h3>Audio Elite</h3>
+                        <div class="product-price">€199</div>
+                        <p>Premium geluidskwaliteit met noise-cancelling technologie voor de perfecte audioervaring.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">⌚</div>
+                    <div class="product-info">
+                        <h3>Smart Watch</h3>
+                        <div class="product-price">€249</div>
+                        <p>Stijlvolle smartwatch met gezondheidsmonitoring en lange batterijduur.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">📷</div>
+                    <div class="product-info">
+                        <h3>Camera Vision</h3>
+                        <div class="product-price">€599</div>
+                        <p>Professionele camera met 4K video en AI-gestuurde fotografie functies.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">🔊</div>
+                    <div class="product-info">
+                        <h3>Speaker Max</h3>
+                        <div class="product-price">€149</div>
+                        <p>Draadloze speaker met 360° geluid en waterbestendige behuizing.</p>
+                        <button class="buy-button">Bestel Nu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Page -->
+    <div id="faq" class="page">
+        <div class="container">
+            <div class="faq-header">
+                <h1>Veelgestelde Vragen</h1>
+                <p>Vind antwoorden op de meest gestelde vragen</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Wat is de levertijd van bestellingen?
+                    </button>
+                    <div class="faq-answer">
+                        Standaard leveren wij binnen 2-3 werkdagen in Nederland en België. Voor expreslevering kunt u kiezen voor levering binnen 24 uur tegen meerprijs.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Kan ik mijn bestelling retourneren?
+                    </button>
+                    <div class="faq-answer">
+                        Ja, u heeft 30 dagen bedenktijd om uw bestelling kosteloos te retourneren. Het product moet in originele staat verkeren met alle originele verpakkingen.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Welke betaalmethoden accepteren jullie?
+                    </button>
+                    <div class="faq-answer">
+                        Wij accepteren alle gangbare betaalmethoden zoals iDEAL, creditcards, PayPal, Bancontact en achteraf betalen via Klarna.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Is er garantie op de producten?
+                    </button>
+                    <div class="faq-answer">
+                        Alle onze producten hebben minimaal 2 jaar fabrieksgarantie. Voor premium producten bieden wij uitgebreide garantie tot 3 jaar aan.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Hoe kan ik contact opnemen met klantenservice?
+                    </button>
+                    <div class="faq-answer">
+                        U kunt ons bereiken via email (info@modernbrand.nl), telefoon (088-123-4567) of via onze live chat. Onze klantenservice is beschikbaar van maandag tot vrijdag van 9:00 tot 17:00.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Zijn de producten geschikt voor zakelijk gebruik?
+                    </button>
+                    <div class="faq-answer">
+                        Zeker! Onze producten zijn ook perfect geschikt voor zakelijk gebruik. Wij bieden speciale business-tarieven en volumekortingen voor bedrijven. Neem contact op voor een op maat gemaakt voorstel.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQ items
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allQuestions = document.querySelectorAll('.faq-question');
+            
+            allAnswers.forEach(ans => ans.classList.remove('active'));
+            allQuestions.forEach(q => q.classList.remove('active'));
+            
+            // Toggle current item if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+
+        // Add smooth scroll behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some interactive animations on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            const cards = document.querySelectorAll('.feature-card, .product-card, .faq-item');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>
