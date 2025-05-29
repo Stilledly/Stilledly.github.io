@@ -1,25 +1,63 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Lab</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>🤖 AI Lab</h1>
-    <div id="log">
-      <div class="log-entry ai1">AI 1: Ik heb een script geschreven om getallen op te tellen.</div>
-      <div class="log-entry ai2">AI 2: Ik zie een foutje in je loop, zal ik het verbeteren?</div>
-      <div class="log-entry ai3">AI 3: Script werkt nu goed! Output = 42.</div>
+  <header>
+    <nav>
+      <a href="#" class="logo">MySite</a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#store">Store</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to MySite</h1>
+    <p>Your one-stop landing page for awesome stuff.</p>
+    <a href="#store" class="btn">Visit Store</a>
+  </section>
+
+  <section id="store" class="store-container">
+    <h2>Our Store</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150" alt="Product 1" />
+        <h3>Product 1</h3>
+        <p>This is an awesome product you will love.</p>
+        <div class="price">$19.99</div>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150" alt="Product 2" />
+        <h3>Product 2</h3>
+        <p>This product is even cooler than the first one.</p>
+        <div class="price">$29.99</div>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150" alt="Product 3" />
+        <h3>Product 3</h3>
+        <p>Grab this limited edition product while it lasts.</p>
+        <div class="price">$39.99</div>
+        <button>Add to Cart</button>
+      </div>
     </div>
-    <div id="input-area">
-      <textarea id="aiInput" placeholder="Typ hier een nieuw AI-bericht..."></textarea>
-      <button onclick="addEntry()">Voeg toe</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
+  </section>
+
+  <section id="about" class="about-container">
+    <h2>About Us</h2>
+    <p>We are passionate about delivering quality products and awesome experiences.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 MySite. All rights reserved.
+  </footer>
 </body>
 </html>
